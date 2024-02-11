@@ -1,6 +1,9 @@
 import math, random
 
 
+def suppressScientific(num):
+    return f"{num:.8f}"
+
 def getRandomPrime(minimum=0,maximum=100):
     # create prime number generator
     def isPrime(n):
@@ -25,7 +28,7 @@ def encrypt(string):
     # i got them from nerds on google
     msg_unencrypted = string # msg is for the encrypted version
     mybytes = msg_unencrypted.encode('utf-8') + b'\x01'  # Pad with 1 to preserve trailing zeroes
-    msg = int.from_bytes(mybytes, 'little')
+    suppressScientific(msg = int.from_bytes(mybytes, 'little'))
     encrypted = [msg,secret_number*math.pi]
     return encrypted
 def decrypt(encrypted_message_as_list):
