@@ -20,13 +20,18 @@ secret_number=getRandomPrime(0,1000)
 
 # Get message, then convert it to numbers
 def encrypt(string):
-    """ Encrypts STRING into effectively random numbers"""
+    """ Encrypts STRING into effectively random numbers""" 
+    # the next 3 or so lines i don't really understand
+    # i got them from nerds on google
     msg_unencrypted = string # msg is for the encrypted version
     mybytes = msg_unencrypted.encode('utf-8') + b'\x01'  # Pad with 1 to preserve trailing zeroes
     msg = int.from_bytes(mybytes, 'little')
-    return msg*secret_number
-def decrypt(encrypted_message):
+    encrypted = [msg,secret_number]
+    return encrypted
+def decrypt(encrypted_message_as_list):
     """ Decrypts the ENCRYPTED_MESSAGE from effectively random numbers to actual text"""
+    encrypted_message = encrypted_message_as_list[0]
+    secret_number = encrypted_message_as_list[1]
     real_message = int(encrypted_message/secret_number)
     recoveredbytes = real_message.to_bytes((encrypted_message.bit_length() + 7) // 8, 'little')
     recoveredstring = recoveredbytes[:-1].decode('utf-8') # Strip pad before decoding
