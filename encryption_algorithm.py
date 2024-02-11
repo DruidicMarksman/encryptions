@@ -25,13 +25,13 @@ def encrypt(string):
     # i got them from nerds on google
     msg_unencrypted = string # msg is for the encrypted version
     mybytes = msg_unencrypted.encode('utf-8') + b'\x01'  # Pad with 1 to preserve trailing zeroes
-    msg = int.from_bytes(mybytes, 'little')/math.pi
-    encrypted = [msg,secret_number]
+    msg = int.from_bytes(mybytes, 'little')
+    encrypted = [msg,secret_number*math.pi]
     return encrypted
 def decrypt(encrypted_message_as_list):
     """ Decrypts the ENCRYPTED_MESSAGE from effectively random numbers to actual text"""
-    encrypted_message = encrypted_message_as_list[0]*math.pi
-    secret_number = encrypted_message_as_list[1]
+    encrypted_message = encrypted_message_as_list[0]
+    secret_number = (encrypted_message_as_list[1])/math.pi
     real_message = int(encrypted_message/secret_number)
     recoveredbytes = real_message.to_bytes((encrypted_message.bit_length() + 7) // 8, 'little')
     recoveredstring = recoveredbytes[:-1].decode('utf-8') # Strip pad before decoding
